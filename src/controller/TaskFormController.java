@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.Optional; // Needed for Alert.showAndWait() result
+import model.Task;
 
 public class TaskFormController {
 
@@ -28,7 +29,7 @@ public class TaskFormController {
     private boolean saveClicked = false; // Flag to indicate if "Save" button was pressed
 
     // Optional: A Task object to hold data (useful for editing existing tasks)
-    // private Task currentTask;
+    private Task currentTask;
 
     // --- Initialization Method ---
     // This method is called automatically by JavaFX after the FXML has been loaded
@@ -53,32 +54,26 @@ public class TaskFormController {
     private void handleSaveTask() {
         // 1. Validate the user input
         if (isInputValid()) {
-            saveClicked = true; // Set flag to true as save was successful
 
-            // 2. Get the values from the input fields
+            // 2. Get the new values from the input fields
             String title = taskTitleField.getText();
             String description = taskDescriptionArea.getText();
             LocalDate dueDate = taskDueDatePicker.getValue();
             String category = taskCategoryChoiceBox.getValue();
             String priority = taskPriorityChoiceBox.getValue();
 
-            // --- IMPORTANT: What to do with the data? ---
-            // At this point, you have all the task data.
-            // You would typically:
-            // a) Create a new Task object: new Task(title, description, dueDate, category, priority);
-            // b) Pass this new Task object back to the MainController (e.g., via a getter method)
-            // c) Or, if editing, update the 'currentTask' object's properties.
-            // For now, we'll just print it:
-            System.out.println("Saving Task:");
-            System.out.println("  Title: " + title);
-            System.out.println("  Description: " + description);
-            System.out.println("  Due Date: " + dueDate);
-            System.out.println("  Category: " + category);
-            System.out.println("  Priority: " + priority);
-            // Example of how you might pass data back to MainController (see MainController code next)
-            // MainController.getTaskDataFromForm(title, description, dueDate, category, priority);
+            // 3. Check if we are in "Edit" mode (currentTask is not null)
+            if (currentTask != null) {
+                // We are editing: update the existing task object
+                currentTask.setTitle(title);
+                currentTask.setDescription(description);
+                currentTask.setDueDate(dueDate);
+                currentTask.setCategory(category);
+                currentTask.setPriority(priority);
+            }
 
-            // 3. Close the pop-up window
+            // 4. Set flag and close
+            saveClicked = true;
             dialogStage.close();
         }
     }
@@ -114,16 +109,16 @@ public class TaskFormController {
     //  * This method would be used when you want to edit an existing task.
     //  * @param task The task object to edit.
     //  */
-    // public void setTask(Task task) {
-    //     this.currentTask = task;
-    //     taskTitleField.setText(task.getTitle());
-    //     taskDescriptionArea.setText(task.getDescription());
-    //     taskDueDatePicker.setValue(task.getDueDate());
-    //     taskCategoryChoiceBox.getSelectionModel().select(task.getCategory());
-    //     taskPriorityChoiceBox.getSelectionModel().select(task.getPriority());
-    //     // Change label from "Task Details" to "Edit Task" if needed
-    //     // dialogStage.setTitle("Edit Task");
-    // }
+    public void setTask(Task task) {
+        this.currentTask = task;
+
+        // Populate the form fields with data from the task object
+        taskTitleField.setText(task.getTitle());
+        taskDescriptionArea.setText(task.getDescription());
+        taskDueDatePicker.setValue(task.getDueDate());
+        taskCategoryChoiceBox.getSelectionModel().select(task.getCategory());
+        taskPriorityChoiceBox.getSelectionModel().select(task.getPriority());
+    }
 
     /**
      * Validates the user input in the form fields.
