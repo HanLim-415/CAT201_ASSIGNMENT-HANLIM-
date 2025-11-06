@@ -101,7 +101,6 @@
                   <ComboBox fx:id="filterStatusCombo" prefHeight="26.0" prefWidth="10.0" />
                   <Label text="Due Date" />
                   <DatePicker fx:id="filterDate" />
-                  <Button fx:id="filterButton" mnemonicParsing="false" onAction="#applyFilters" text="Filter" />
                   <Button fx:id="clearFiltersButton" mnemonicParsing="false" onAction="#clearFilters" text="Clear" />
                </children>
             </HBox>

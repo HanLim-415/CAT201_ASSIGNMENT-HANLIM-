@@ -23,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import util.DataManager;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Controller for the main application view (MainView.fxml).
@@ -76,8 +77,31 @@ public class MainController {
         filterStatusCombo.getItems().addAll("All Status", "Completed", "Pending");
         filterStatusCombo.getSelectionModel().select("All Status");
 
-        // --- 3. DELETED TEST DATA ---
-        // (The tasks.add(...) lines are now gone)
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilters();
+        });
+
+        filterCategoryCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilters();
+        });
+
+        filterStatusCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilters();
+        });
+
+        filterDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            applyFilters();
+        });
+        taskTable.setOnMouseClicked((MouseEvent event) -> {
+            // Check for a double-click (click count is 2)
+            if (event.getClickCount() == 2) {
+                // Check if a row is actually selected (not clicking on empty space)
+                if (taskTable.getSelectionModel().getSelectedItem() != null) {
+                    // Call your existing method to open the edit window!
+                    handleViewDetails();
+                }
+            }
+        });
     }
 
     /**
