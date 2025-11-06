@@ -1,4 +1,6 @@
+import controller.MainController;
 import javafx.application.Application;
+import javafx.application.Platform; // <-- Make sure this import is here
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,19 +11,38 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // Load the root node from FXML
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainView.fxml"));
+        // 1. Create a loader instance
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainView.fxml"));
 
-        // Set the window title
+        // 2. Load the root node
+        Parent root = loader.load();
+
+        // 3. GET THE CONTROLLER
+        MainController controller = loader.getController();
+
+        // 4. Set the window title
         primaryStage.setTitle("Smart To-Do List");
 
-        // Create a scene with the loaded layout
+        // 5. Create a scene
         Scene scene = new Scene(root, 1200, 808);
 
-        // Attach the scene to the stage (window)
+        // 6. Attach the scene
         primaryStage.setScene(scene);
 
-        // Show the window
+        // 7. --- THIS IS THE CORRECTED EXIT LOGIC ---
+        // This will run, save the tasks, and then
+        // force the application to shut down.
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("Window is closing. Saving tasks...");
+            controller.saveTasksOnExit(); // Call the save method
+
+            // --- ADD THESE LINES BACK IN ---
+            Platform.exit(); // Tells JavaFX to shut down
+            System.exit(0);  // Tells the Java Virtual Machine to shut down
+        });
+        // --- END OF FIX ---
+
+        // 8. Show the window
         primaryStage.show();
     }
 

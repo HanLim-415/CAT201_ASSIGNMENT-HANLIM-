@@ -25,25 +25,20 @@
       <VBox prefHeight="42.0" prefWidth="614.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Smart ToDo List" />
-            <MenuBar>
-              <menus>
-                <Menu fx:id="menuItemFile" mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu fx:id="menuItemExit" mnemonicParsing="false" onAction="#handleExit" text="Exit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu fx:id="menuItemHelp" mnemonicParsing="false" onAction="#handleHelp" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
+             <MenuBar>
+                 <menus>
+                     <Menu fx:id="menuItemFile" mnemonicParsing="false" text="File">
+                         <items>
+                             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                         </items>
+                     </Menu>
+                     <Menu fx:id="menuItemHelp" mnemonicParsing="false" onAction="#handleHelp" text="Help">
+                         <items>
+                             <MenuItem mnemonicParsing="false" text="About" />
+                         </items>
+                     </Menu>
+                 </menus>
+             </MenuBar>
          </children>
       </VBox>
    </top>
