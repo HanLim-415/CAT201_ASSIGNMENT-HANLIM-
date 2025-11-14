@@ -22,6 +22,7 @@ public class Task {
     private String category;
     private String priority;
     private boolean completed;
+    private boolean isDeleted;
 
     // --- 2. JavaFX Properties (for the TableView) ---
     // These are marked 'transient' so Gson ignores them completely.
@@ -31,6 +32,7 @@ public class Task {
     private transient StringProperty categoryProperty;
     private transient StringProperty priorityProperty;
     private transient BooleanProperty completedProperty;
+    private transient BooleanProperty deletedProperty;
 
     /**
      * Constructor for a new Task.
@@ -42,6 +44,7 @@ public class Task {
         this.category = category;
         this.priority = priority;
         this.completed = false; // New tasks start as not completed
+        this.isDeleted = false; // Default to NOT deleted
     }
 
     /**
@@ -49,6 +52,7 @@ public class Task {
      */
     public Task() {
         this.completed = false;
+        this.isDeleted = false;
     }
 
     // --- 3. "Lazy-Loaded" Property Getters ---
@@ -103,6 +107,21 @@ public class Task {
             completedProperty.addListener((obs, oldVal, newVal) -> completed = newVal);
         }
         return completedProperty;
+    }
+
+    public BooleanProperty deletedProperty() {
+        if(deletedProperty == null) {
+           deletedProperty = new SimpleBooleanProperty(isDeleted);
+           deletedProperty.addListener((obs, oldVal, newVal) -> isDeleted = newVal);
+        }
+        return deletedProperty;
+    }
+
+    public boolean isDeleted() {return isDeleted;}
+
+    public void setDeleted(boolean deleted) {
+        this.isDeleted = isDeleted;
+        if(deletedProperty != null) {deletedProperty.set(isDeleted);}
     }
 
     // --- 4. Standard Getters & Setters ---

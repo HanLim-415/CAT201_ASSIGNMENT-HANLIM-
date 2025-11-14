@@ -1,0 +1,198 @@
+/* 1. ROOT & GLOBAL FONT */
+.root {
+    -fx-background-color: #222831;
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* 2. ALL LABELS (Fixes invisible text) */
+.label {
+    -fx-text-fill: #DFD0B8;
+}
+
+/* 3. APP TITLE */
+#appTitle {
+    -fx-font-size: 28px;
+    -fx-font-family: "Segoe UI Black";
+    -fx-font-weight: bold;
+    -fx-text-fill: #DFD0B8;
+    -fx-padding: 20 0 25 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);
+    -fx-letter-spacing: 1.5px;
+}
+
+/* 4. ADD TASK BUTTON */
+#addTaskButton {
+    -fx-background-color: #948979;
+    -fx-text-fill: #222831; /* Dark text on light button */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 60;
+}
+
+#addTaskButton:hover {
+    -fx-background-color: #DFD0B8;
+}
+
+/* 5. GENERAL BUTTONS */
+.button {
+    -fx-background-color: #393E46;
+    -fx-text-fill: #DFD0B8; /* Light text on dark button */
+    -fx-background-radius: 10;
+}
+
+.button:hover {
+    -fx-background-color: #505760;
+}
+
+/* 6. INPUT FIELDS (TextField, ComboBox, DatePicker) */
+.text-field, .combo-box, .date-picker .text-field {
+    -fx-background-color: #393E46;
+    -fx-text-fill: #DFD0B8;
+    -fx-background-radius: 12;
+    -fx-border-color: transparent;
+    /* FIX for dark prompt text */
+    -fx-prompt-text-fill: derive(#DFD0B8, -30%); /* Slightly dimmer beige */
+}
+
+/* Fixes the text of the *selected item* in the ComboBox */
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #DFD0B8;
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #948979;
+    -fx-border-radius: 10;
+}
+
+/* 7. TABLE STYLING */
+.table-view {
+    -fx-border-color: #393E46;
+    -fx-border-width: 2;
+}
+
+/* FIX for light table rows */
+.table-row-cell {
+    -fx-background-color: #222831; /* Dark background */
+    -fx-text-fill: #DFD0B8;
+    -fx-border-color: transparent transparent #393E46 transparent; /* Row separators */
+}
+
+/* Alternating row color */
+.table-row-cell:odd {
+    -fx-background-color: #2b323b; /* Slightly lighter dark color */
+}
+
+/* Text color in all cells */
+.table-cell {
+    -fx-text-fill: #DFD0B8;
+}
+
+/* Selected Row */
+.table-row-cell:selected {
+    -fx-background-color: #948979; /* Beige highlight */
+}
+
+/* Text color when row is selected */
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: #222831; /* Dark text on beige */
+}
+
+/* Table Header Background */
+.table-view .column-header-background,
+.table-view .filler {
+    -fx-background-color: #393E46;
+    -fx-background-radius: 5 5 0 0;
+}
+
+/* Table Header Text */
+.table-view .column-header .label {
+    -fx-text-fill: #DFD0B8;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* 8. MENU BAR (Fix) */
+#menuBar, #menuBarPane1, #menuBarPane2{
+    -fx-background-color: #393E46; /* Matched to theme */
+}
+.menu-bar .label {
+    -fx-text-fill: #DFD0B8;
+}
+.menu-item:focused {
+    -fx-background-color: #948979;
+}
+.menu-item:focused .label {
+    -fx-text-fill: #222831;
+}
+
+/* 9. DATE PICKER POPUP STYLING (New) */
+.date-picker-popup {
+    -fx-background-color: #393E46;
+    -fx-border-color: #948979;
+    -fx-border-width: 1px;
+}
+
+/* "November 2025" area */
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #393E46;
+}
+
+/* All text in the popup */
+.date-picker-popup .label {
+    -fx-text-fill: #DFD0B8;
+}
+
+/* "Sun, Mon, Tue..." day names */
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #948979; /* Muted brown */
+    -fx-font-weight: bold;
+}
+
+/* The individual day numbers */
+.date-picker-popup .day-cell {
+    -fx-background-color: #393E46;
+    -fx-text-fill: #DFD0B8;
+    -fx-background-radius: 4;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #505760;
+}
+
+/* The current date (e.g., Nov 14) */
+.date-picker-popup .day-cell.today {
+    -fx-border-color: #948979;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4;
+}
+
+/* The date you click on */
+.date-picker-popup .day-cell:selected {
+    -fx-background-color: #948979;
+    -fx-text-fill: #222831;
+}
+
+/* Faded numbers from other months */
+.date-picker-popup .day-cell.previous-month,
+.date-picker-popup .day-cell.next-month {
+    -fx-text-fill: #505760;
+}
+
+/* The arrow buttons */
+.date-picker-popup .spinner .arrow-button {
+    -fx-background-color: #393E46;
+}
+.date-picker-popup .spinner .arrow-button .arrow {
+    -fx-background-color: #DFD0B8; /* Beige arrows */
+}
+
+#summaryTable{
+    -fx-background-color: #393E46; /* Distinct card background */
+    -fx-background-radius: 15;     /* Nice rounded corners */
+    -fx-padding: 15;               /* Breathing room inside the card */
+
+    /* A subtle shadow to make it float */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 2);
+}

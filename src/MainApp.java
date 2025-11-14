@@ -24,7 +24,7 @@ public class MainApp extends Application {
         primaryStage.setTitle("Smart To-Do List");
 
         // 5. Create a scene
-        Scene scene = new Scene(root, 1200, 808);
+        Scene scene = new Scene(root, 1200, 700);
 
         // 6. Attach the scene
         primaryStage.setScene(scene);
