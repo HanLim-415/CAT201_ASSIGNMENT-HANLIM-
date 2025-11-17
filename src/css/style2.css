@@ -100,10 +100,12 @@
 }
 
 /* Table Header Background */
-.table-view .column-header-background,
+.table-view .column-header,
 .table-view .filler {
     -fx-background-color: #393E46;
     -fx-background-radius: 5 5 0 0;
+    -fx-border-color: white; /* ADD THIS LINE */
+    -fx-border-width: 0 0 1px 1px; /* ADD THIS LINE (bottom and left border) */
 }
 
 /* Table Header Text */
@@ -195,4 +197,62 @@
 
     /* A subtle shadow to make it float */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 2);
+}
+
+/* --- 10. DatePicker Button Fix (for filter bar) --- */
+
+/* This targets the button on the DatePicker */
+.date-picker .arrow-button {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray */
+    -fx-background-radius: 0 12 12 0; /* Match the text field's rounded corner */
+}
+
+/* Style for when you hover over the button */
+.date-picker .arrow-button:hover {
+    -fx-background-color: #505760; /* BACKGROUND: Lighter Gray on hover */
+}
+
+/* This styles the little calendar graphic itself */
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #DFD0B8; /* ARROW/ICON COLOR: Beige */
+}
+
+/* --- 10. DatePicker Container Fix --- */
+
+/* This styles the outer container of the DatePicker */
+.date-picker {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray (Matches the text field) */
+    -fx-background-radius: 12;     /* Match the text field's rounded corners */
+}
+
+/* --- 13. Button Hover Effect --- */
+
+/* This makes any button smoothly scale up when you hover */
+.button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-background-color: #505760; /* This is Ivan's existing hover color */
+}
+
+/* This makes the Add Task button scale up */
+#addTaskButton:hover {
+    -fx-background-color: #DFD0B8; /* Ivan's existing hover color */
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+/* --- 14. Button Pressed Effect --- */
+
+.button:pressed {
+    /* Move the button down and right 1 pixel */
+    -fx-translate-y: 1px;
+    -fx-translate-x: 1px;
+    /* Add an inner shadow to look "pressed" */
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+}
+
+#addTaskButton:pressed {
+    -fx-translate-y: 1px;
+    -fx-translate-x: 1px;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
 }
