@@ -180,11 +180,25 @@
     -fx-text-fill: #DFD0B8;
 }
 
-/* This styles the item that is currently selected (with the checkmark) */
-.choice-box .menu-item:checked .label {
+/* * === THIS IS THE FIX ===
+ * We target the '.selected' style class, which JavaFX
+ * automatically adds to the selected RadioMenuItem.
+*/
+
+/* This styles the background of the *selected* item */
+.choice-box .menu-item.selected {
     -fx-background-color: #948979; /* BACKGROUND: Beige highlight */
+}
+
+/* This styles the text of the *selected* item */
+.choice-box .menu-item.selected .label {
     -fx-text-fill: #222831; /* TEXT COLOR: Dark Gray */
     -fx-font-weight: bold;
+}
+
+/* This styles the little checkmark dot itself */
+.choice-box .menu-item.selected .radio-menu-item-icon {
+    -fx-background-color: #222831; /* DOT COLOR: Dark Gray */
 }
 
 /* --- 9. Fix for DatePicker Calendar Arrows --- */
