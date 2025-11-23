@@ -1,0 +1,380 @@
+[
+  {
+    "title": "Clean Room",
+    "description": "General cleaning",
+    "dueDate": "2025-11-18",
+    "category": "Home",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Grocery Shopping",
+    "description": "Milk, eggs, bread",
+    "dueDate": "2025-11-19",
+    "category": "Home",
+    "priority": "Low",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Prepare Slides",
+    "description": "Presentation for class",
+    "dueDate": "2025-11-22",
+    "category": "School",
+    "priority": "High",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Revise Chapter 5",
+    "description": "C++ Templates",
+    "dueDate": "2025-11-21",
+    "category": "School",
+    "priority": "High",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Laundry",
+    "description": "Wash clothes",
+    "dueDate": "2025-11-17",
+    "category": "Home",
+    "priority": "Low",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Pay Hostel Fee",
+    "description": "Online banking",
+    "dueDate": "2025-12-01",
+    "category": "Personal",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Plan Christmas Gift",
+    "description": "Friends list",
+    "dueDate": "2025-12-20",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Attend Club Meeting",
+    "description": "Chess club event",
+    "dueDate": "2025-11-25",
+    "category": "Personal",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Fix Git Conflicts",
+    "description": "Resolve merge issues",
+    "dueDate": "2025-11-16",
+    "category": "Work",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Update Resume",
+    "description": "Add new projects",
+    "dueDate": "2025-12-05",
+    "category": "Work",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Water Plants",
+    "description": "Balcony plants",
+    "dueDate": "2025-11-16",
+    "category": "Home",
+    "priority": "Low",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Renew Library Books",
+    "description": "CS textbooks",
+    "dueDate": "2025-11-30",
+    "category": "School",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Practice Singing",
+    "description": "30-minute session",
+    "dueDate": "2025-11-18",
+    "category": "Personal",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Study Pointer Notes",
+    "description": "C++ pointers test",
+    "dueDate": "2025-11-19",
+    "category": "School",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Draft Sponsor Email",
+    "description": "Chess competition sponsors",
+    "dueDate": "2025-12-10",
+    "category": "Work",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Update App UI",
+    "description": "Improve CSS styling",
+    "dueDate": "2025-11-27",
+    "category": "Work",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Clean Laptop",
+    "description": "Keyboard \u0026 vents",
+    "dueDate": "2025-11-23",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Plan Budget",
+    "description": "Monthly expenses",
+    "dueDate": "2025-11-28",
+    "category": "Personal",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Backup Projects",
+    "description": "Google Drive",
+    "dueDate": "2025-11-20",
+    "category": "Work",
+    "priority": "Medium",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Attend Tutorial",
+    "description": "Chapter 7 discussion",
+    "dueDate": "2025-11-17",
+    "category": "School",
+    "priority": "Medium",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Buy Mousepad",
+    "description": "Shopee",
+    "dueDate": "2025-11-29",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Test Queue Code",
+    "description": "C++ implementation",
+    "dueDate": "2025-11-26",
+    "category": "School",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Prepare For Debate",
+    "description": "Research counterpoints",
+    "dueDate": "2025-11-24",
+    "category": "School",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Organize Desk",
+    "description": "Sort documents",
+    "dueDate": "2025-11-18",
+    "category": "Home",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Cook Dinner",
+    "description": "Chicken rice",
+    "dueDate": "2025-11-16",
+    "category": "Home",
+    "priority": "Low",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Watch Tutorial Videos",
+    "description": "Linked list to doubly",
+    "dueDate": "2025-11-19",
+    "category": "School",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Check Bank Balance",
+    "description": "Monthly check",
+    "dueDate": "2025-11-30",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Clean Email Inbox",
+    "description": "Delete old mails",
+    "dueDate": "2025-11-21",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Refactor Code",
+    "description": "Improve OOP structure",
+    "dueDate": "2025-11-22",
+    "category": "Work",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Prepare Meeting Notes",
+    "description": "For sponsor team",
+    "dueDate": "2025-11-25",
+    "category": "Work",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Buy Shampoo",
+    "description": "Guardian",
+    "dueDate": "2025-11-17",
+    "category": "Home",
+    "priority": "Low",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Review Budgeting Chapter",
+    "description": "Management Accounting",
+    "dueDate": "2025-11-26",
+    "category": "School",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Sort Photos",
+    "description": "Phone gallery cleanup",
+    "dueDate": "2025-11-28",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Plan Weekly Meals",
+    "description": "Simple recipes",
+    "dueDate": "2025-11-20",
+    "category": "Home",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Join Coding Contest",
+    "description": "Beginner category",
+    "dueDate": "2025-12-15",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Prepare Club Poster",
+    "description": "Event promotion",
+    "dueDate": "2025-11-23",
+    "category": "Work",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Reply Emails",
+    "description": "Lecturers \u0026 classmates",
+    "dueDate": "2025-11-19",
+    "category": "School",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Finish Reading Notes",
+    "description": "Capital budgeting",
+    "dueDate": "2025-11-24",
+    "category": "School",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Test Login Feature",
+    "description": "User account module",
+    "dueDate": "2025-11-26",
+    "category": "Work",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Prepare for Quiz",
+    "description": "Chapter 8-10",
+    "dueDate": "2025-11-27",
+    "category": "School",
+    "priority": "High",
+    "completed": false,
+    "isDeleted": false
+  },
+  {
+    "title": "Check Parcel",
+    "description": "Shopee delivery",
+    "dueDate": "2025-11-17",
+    "category": "Personal",
+    "priority": "Low",
+    "completed": true,
+    "isDeleted": false
+  },
+  {
+    "title": "Buy Popcorn",
+    "description": "For cinema purpose",
+    "dueDate": "2025-11-19",
+    "category": "Work",
+    "priority": "Medium",
+    "completed": false,
+    "isDeleted": false
+  }
+]
