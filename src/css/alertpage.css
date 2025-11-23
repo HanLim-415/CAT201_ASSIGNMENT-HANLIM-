@@ -1,0 +1,85 @@
+/* ==============================================
+   CUSTOM ALERT DIALOG STYLING
+   ============================================== */
+
+/* 1. The Main Background of the Popup */
+.alert-page {
+    -fx-background-color: #393E46; /* Dark Grey */
+    -fx-border-color: #948979;     /* Beige Border */
+    -fx-border-width: 2px;
+}
+
+/* 2. The Text Message ("Are you sure...") */
+.alert-page .content.label {
+    -fx-text-fill: #DFD0B8;       /* Beige Text */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI Black";
+}
+
+/* 3. The Header Panel (Top section, if you ever use it) */
+.alert-page .header-panel {
+    -fx-background-color: #222831; /* Darker Grey */
+}
+
+.alert-page .header-panel .label {
+    -fx-text-fill: #948979;
+    -fx-font-family: "Segoe UI Black";
+    -fx-font-size: 20px; /* Make it bigger */
+    -fx-font-weight: bold;
+}
+
+/* 4. The Buttons (Yes/No) */
+/* This re-uses your existing button styles, but ensures they are visible */
+.alert-page .button-bar .button {
+    -fx-background-color: #222831; /* Dark Button Background */
+    -fx-text-fill: #948979;        /* Beige Text */
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-border-color: #505760;
+    -fx-font-family: "Segoe UI Black";
+    -fx-font-weight: bold;
+    -fx-padding: 8 15 8 15;
+}
+
+.alert-page .button-bar .button:hover {
+    -fx-background-color: #948979; /* Beige Hover */
+    -fx-text-fill: #222831;        /* Dark Text on Hover */
+    -fx-cursor: hand;
+}
+
+.alert-page .button-bar .no-button {
+    -fx-background-color: #BE3144;
+    -fx-text-fill: #DFD0B8;
+    -fx-font-weight: bold;
+}
+
+.alert-page .button-bar .no-button:hover {
+    -fx-background-color: #F15A59;
+    -fx-cursor: hand;
+}
+
+/* The 'No' Button (Safe) -> Green */
+.alert-page .button-bar .yes-button {
+    -fx-background-color: #3f654a;
+    -fx-text-fill: #DFD0B8;
+    -fx-font-weight: bold;
+}
+
+.alert-page .button-bar .yes-button:hover {
+    -fx-background-color: #588866;
+    -fx-cursor: hand;
+}
+
+.alert-page.header-panel {
+    -fx-background-color: #222831; /* Darker Grey */
+}
+
+.alert-page .header-panel .label {
+    -fx-text-fill: #DFD0B8;
+
+    /* ADD THESE LINES TO CHANGE THE FONT */
+    -fx-font-family: "Segoe UI Black";
+    -fx-font-size: 20px; /* Make it bigger */
+    -fx-font-weight: bold;
+}

@@ -25,6 +25,7 @@ public class DataManager {
     private static Gson createGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .setPrettyPrinting()
                 .create();
     }
 

@@ -9,10 +9,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Task;
 import javafx.scene.control.Alert.AlertType;
+
+import java.awt.*;
 import java.util.Optional;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -20,6 +26,8 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.collections.transformation.FilteredList;
 import util.DataManager;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Controller for the main application view (MainView.fxml).
@@ -85,19 +93,20 @@ public class MainController {
             }
         });
 
-        // --- 2. THIS IS THE CORRECTED LISTENER ---
         tasks.addListener((ListChangeListener.Change<? extends Task> c) -> {
             while (c.next()) {
                 if (c.wasAdded() || c.wasRemoved() || c.wasUpdated()) {
-                    // Use Platform.runLater() to delay the update
-                    // This ensures all property changes are complete
-                    // before we re-calculate the summary.
+
+                    // Update the UI counters
                     Platform.runLater(() -> updateSummaryLabels());
-                    break;
+
+                    // Save the changes to the file immediately!
+                    DataManager.saveTasks(tasks);
+
+                    break; // Stop checking this specific change event
                 }
             }
         });
-        // --- END CORRECTION ---
 
         // Call it once at the start to set the initial values
         updateSummaryLabels();
@@ -174,16 +183,113 @@ public class MainController {
 
     @FXML
     private void handleExit() {
-        Stage stage = (Stage) addTaskButton.getScene().getWindow();
-        stage.close();
+        // 1. Create the confirmation alert
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Exit Confirmation");
+        alert.setHeaderText(null); // No header, just the message
+        alert.setContentText("Are you sure you want to exit?");
+        alert.initStyle(javafx.stage.StageStyle.UNDECORATED);
+
+        Image image = new Image(getClass().getResourceAsStream("/images/exit.png"));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(48);
+        imageView.setFitWidth(48);
+        alert.setGraphic(imageView);
+
+        // --- 2. LINK CSS ---
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alertpage.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert-page");
+
+        // --- 3. CUSTOMIZE BUTTONS ---
+        ButtonType buttonTypeYes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeNo = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        // Lookup the buttons so we can style them individually
+        Button yesButton = (Button) dialogPane.lookupButton(buttonTypeYes);
+        Button noButton = (Button) dialogPane.lookupButton(buttonTypeNo);
+
+        // Add specific CSS classes
+        yesButton.getStyleClass().add("yes-button");
+        noButton.getStyleClass().add("no-button");
+
+        // Show the alert and wait for the user's choice
+        Optional<ButtonType> result = alert.showAndWait();
+        // If they clicked "Yes", save and close
+        if (result.isPresent() && result.get() == buttonTypeYes) {
+            DataManager.saveTasks(tasks);
+            Stage stage = (Stage) addTaskButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML
     private void handleHelp() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("About Smart ToDo List");
-        alert.setHeaderText(null);
-        alert.setContentText("This is an assignment for CAT201.");
+        alert.setTitle("User Guidelines");
+        alert.setHeaderText("How to use Smart ToDo List");
+
+        // --- 1. SET THE ICON (Top Right) ---
+        try {
+            Image helpIcon = new Image(getClass().getResourceAsStream("/images/help.png"));
+            ImageView iconView = new ImageView(helpIcon);
+            iconView.setFitHeight(48);
+            iconView.setFitWidth(48);
+            alert.setGraphic(iconView);
+        } catch (Exception e) {
+            System.out.println("Help icon not found.");
+        }
+
+        // --- 2. CREATE A CONTAINER FOR TEXT + IMAGE ---
+        // A VBox (Vertical Box) to stack text on top of the image
+        VBox contentContainer = new VBox(15); // 15px spacing between items
+        contentContainer.setPrefWidth(500);   // Force it to be wider so text fits!
+
+        // --- 3. THE TEXT PART ---
+        String guidelinesText =
+                        "1. Add Task:\n" +
+                        "   Click the (+) button on the left sidebar to create a new task.\n\n" +
+                        "2. Edit Task:\n" +
+                        "   Double-click any row in the table to edit details.\n\n" +
+                        "3. Delete Task:\n" +
+                        "   Select a task and click 'Delete' to remove it.\n\n" +
+                        "4. Search & Filter:\n" +
+                        "   Use the top bar to search by keyword or filter by Category.\n\n" +
+                        "5. Save & Exit:\n" +
+                        "   Your data saves automatically when you modify tasks or exit.";
+
+        Label textLabel = new Label(guidelinesText);
+        textLabel.setWrapText(true); // <--- THIS FIXES THE CUT-OFF TEXT
+        textLabel.setStyle("-fx-text-fill: #DFD0B8; -fx-font-size: 14px; -fx-font-family: 'Segoe UI Black';");
+
+        // --- 4. THE IMAGE SNIPPET PART ---
+        // Uncomment and use your image file when you have it!
+    /*
+    try {
+        Image snippet = new Image(getClass().getResourceAsStream("/images/snippet.png"));
+        ImageView snippetView = new ImageView(snippet);
+        snippetView.setFitWidth(480); // Make it fit inside the box
+        snippetView.setPreserveRatio(true);
+        contentContainer.getChildren().add(snippetView);
+    } catch (Exception e) {
+        // Image not found
+    }
+    */
+
+        // Add text (and later the image) to the box
+        contentContainer.getChildren().add(0, textLabel); // Add text at index 0
+
+        // --- 5. SET THIS BOX AS THE DIALOG CONTENT ---
+        alert.getDialogPane().setContent(contentContainer);
+
+        // --- 6. APPLY STYLING ---
+        alert.initStyle(javafx.stage.StageStyle.UNDECORATED);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alertpage.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert-page");
+
         alert.showAndWait();
     }
 
@@ -261,8 +367,7 @@ public class MainController {
 
         filteredTasks.setPredicate(t -> {
             boolean keywordMatch = keyword.isEmpty() ||
-                    t.getTitle().toLowerCase().contains(keyword) ||
-                    t.getDescription().toLowerCase().contains(keyword);
+                    t.getTitle().toLowerCase().contains(keyword);
             boolean categoryMatch = category.equals("All Categories") ||
                     t.getCategory().equals(category);
             boolean statusMatch;
