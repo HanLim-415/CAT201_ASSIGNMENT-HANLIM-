@@ -41,6 +41,7 @@ public class MainController {
     @FXML private TextField searchField;
     @FXML private ComboBox<String> filterCategoryCombo;
     @FXML private ComboBox<String> filterStatusCombo;
+    @FXML private ComboBox<String> filterPriorityCombo;
     @FXML private DatePicker filterDate;
     @FXML private Label totalTasksLabel;
     @FXML private Label dueTodayLabel;
@@ -67,12 +68,15 @@ public class MainController {
         filterCategoryCombo.getSelectionModel().select("All Categories");
         filterStatusCombo.getItems().addAll("All Status", "Completed", "Pending");
         filterStatusCombo.getSelectionModel().select("All Status");
+        filterPriorityCombo.getItems().addAll("All Priority", "Low", "Medium", "High");
+        filterPriorityCombo.getSelectionModel().select("All Priority");
 
         // --- Instant Filter Listeners (unchanged) ---
         searchField.textProperty().addListener((obs, old, val) -> applyFilters());
         filterCategoryCombo.valueProperty().addListener((obs, old, val) -> applyFilters());
         filterStatusCombo.valueProperty().addListener((obs, old, val) -> applyFilters());
         filterDate.valueProperty().addListener((obs, old, val) -> applyFilters());
+        filterPriorityCombo.valueProperty().addListener((obs, old, val) -> applyFilters());
 
         // Double-click listener (unchanged)
         taskTable.setOnMouseClicked((MouseEvent event) -> {
@@ -252,6 +256,7 @@ public class MainController {
         String keyword = searchField.getText().toLowerCase();
         String category = filterCategoryCombo.getValue();
         String status = filterStatusCombo.getValue();
+        String priority = filterPriorityCombo.getValue();
         LocalDate date = filterDate.getValue();
 
         filteredTasks.setPredicate(t -> {
@@ -268,9 +273,12 @@ public class MainController {
             } else {
                 statusMatch = !t.isCompleted();
             }
+            boolean priorityMatch = priority == null ||
+                                    priority.equals("All Priority") ||
+                                    t.getPriority().equalsIgnoreCase(priority);
             boolean dateMatch = (date == null) ||
                     t.getDueDate().isEqual(date);
-            return keywordMatch && categoryMatch && statusMatch && dateMatch;
+            return keywordMatch && categoryMatch && statusMatch && priorityMatch && dateMatch;
         });
     }
 
@@ -279,6 +287,7 @@ public class MainController {
         searchField.setText("");
         filterCategoryCombo.getSelectionModel().select("All Categories");
         filterStatusCombo.getSelectionModel().select("All Status");
+        filterPriorityCombo.getSelectionModel().select("All Priority");
         filterDate.setValue(null);
     }
 

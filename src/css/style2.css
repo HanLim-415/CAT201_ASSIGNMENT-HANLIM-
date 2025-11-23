@@ -3,6 +3,33 @@
     -fx-background-color: #222831;
     -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
     -fx-font-size: 14px;
+    -fx-selection-bar: #948979;
+    -fx-selection-bar-non-focused: #505760;
+}
+
+.check-box .box {
+    -fx-background-color: #393E46; /* Dark grey interior */
+    -fx-border-color: #DFD0B8;     /* Light border to match text */
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+/* 2. The Focus Ring (Fixes your specific blue issue) */
+.check-box:focused .box {
+    -fx-border-color: #948979;     /* Beige border when focused */
+    /* Optional: Adds a subtle beige glow */
+    -fx-effect: dropshadow(three-pass-box, rgba(148,137,121,0.6), 5, 0, 0, 0);
+}
+
+/* 3. When the box is Checked */
+.check-box:selected .box {
+    -fx-background-color: #948979; /* Turn the box Beige */
+    -fx-border-color: #948979;
+}
+
+/* 4. The actual Check Mark (the 'V' shape) */
+.check-box:selected .mark {
+    -fx-background-color: #222831; /* Dark check mark so it stands out on Beige */
 }
 
 /* 2. ALL LABELS (Fixes invisible text) */
@@ -45,38 +72,105 @@
     -fx-background-color: #505760;
 }
 
-/* 6. INPUT FIELDS (TextField, ComboBox, DatePicker) */
-.text-field, .combo-box, .date-picker .text-field {
+/* Pill shape for TextFields */
+.text-field {
     -fx-background-color: #393E46;
     -fx-text-fill: #DFD0B8;
-    -fx-background-radius: 12;
-    -fx-border-color: transparent;
-    /* FIX for dark prompt text */
-    -fx-prompt-text-fill: derive(#DFD0B8, -30%); /* Slightly dimmer beige */
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-prompt-text-fill: derive(#DFD0B8, -30%);
+}
+
+/* --- Style for the ComboBox (Container) --- */
+.combo-box {
+    -fx-background-color: #393E46;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+/* Specific style for DatePicker's text field */
+.date-picker .text-field {
+    -fx-background-color: #393E46;
+    -fx-text-fill: #DFD0B8;
+    -fx-border-radius: 12 0 0 12; /* Match the container's radius */
+    -fx-background-radius: 12 0 0 12; /* Match the container's radius */
+    -fx-prompt-text-fill: derive(#DFD0B8, -30%);
 }
 
 /* Fixes the text of the *selected item* in the ComboBox */
 .combo-box .list-cell {
-    -fx-background-color: transparent;
+    -fx-background-color: #393E46; /* Must match container */
     -fx-text-fill: #DFD0B8;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+
 }
+/* 1. Make the container behind the list items transparent */
+.combo-box-popup .list-view {
+    -fx-background-color: transparent; /* Removes the white background */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 2); /* Adds a nice shadow */
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #393E46; /* Dark grey item background */
+    -fx-text-fill: #DFD0B8;
+    -fx-padding: 5 10 5 10; /* Add spacing */
+
+    /* Keep them rounded to match your look */
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+
+    /* Add a tiny margin so they look like floating pills */
+    -fx-background-insets: 2;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #948979; /* Beige highlight */
+    -fx-text-fill: #222831;
+
+    /* --- Add smooth zoom --- */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-cursor: hand;
+}
+
+.combo-box-popup .list-view .list-cell:pressed,
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #948979;
+    -fx-text-fill: #222831;
+
+    /* --- Scale up slightly when clicked --- */
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+
+    /* Optional: slight translation like your button pressed */
+    -fx-translate-y: 1px;
+    -fx-translate-x: 1px;
+}
+
 
 .text-field:focused, .combo-box:focused {
     -fx-border-color: #948979;
-    -fx-border-radius: 10;
+    -fx-border-radius: 15;
 }
 
 /* 7. TABLE STYLING */
 .table-view {
+    -fx-background-color: #393E46;
     -fx-border-color: #393E46;
     -fx-border-width: 2;
 }
+
 
 /* FIX for light table rows */
 .table-row-cell {
     -fx-background-color: #222831; /* Dark background */
     -fx-text-fill: #DFD0B8;
     -fx-border-color: transparent transparent #393E46 transparent; /* Row separators */
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-background-color: #DFD0B8;
 }
 
 /* Alternating row color */
@@ -100,10 +194,19 @@
 }
 
 /* Table Header Background */
-.table-view .column-header-background,
+.table-view .column-header,
 .table-view .filler {
+    -fx-background-color: #393E46; /* The header color */
+    -fx-border-color: #222831;
+}
+
+.table-view .column-header-background {
     -fx-background-color: #393E46;
-    -fx-background-radius: 5 5 0 0;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: #393E46; /* Matches your header color */
+    -fx-border-color: transparent; /* Hides any default white borders */
 }
 
 /* Table Header Text */
@@ -115,16 +218,36 @@
 
 /* 8. MENU BAR (Fix) */
 #menuBar, #menuBarPane1, #menuBarPane2{
-    -fx-background-color: #393E46; /* Matched to theme */
+    -fx-background-color: #393E46;
 }
 .menu-bar .label {
     -fx-text-fill: #DFD0B8;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI Black";
 }
+
+.menu-bar .menu-button:hover,
+.menu-bar .menu-button:focused,
+.menu-bar .menu-button:showing {
+    -fx-background-color: #505760; /* Lighter grey when hovering or clicked */
+    -fx-cursor: hand;
+}
+
 .menu-item:focused {
     -fx-background-color: #948979;
 }
 .menu-item:focused .label {
     -fx-text-fill: #222831;
+}
+
+.context-menu {
+    -fx-background-color: #393E46; /* Change to your dark grey */
+    -fx-background-radius: 5;       /* Optional: Round the corners */
+    -fx-border-color: #948979;      /* Optional: Add a beige border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    /* This adds a shadow so it pops out from the background */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 8, 0, 0, 2);
 }
 
 /* 9. DATE PICKER POPUP STYLING (New) */
@@ -146,9 +269,11 @@
 
 /* "Sun, Mon, Tue..." day names */
 .date-picker-popup .day-name-cell {
-    -fx-text-fill: #948979; /* Muted brown */
+    -fx-text-fill: #DFD0B8; /* Muted brown */
     -fx-font-weight: bold;
+    -fx-background-color: #222831;
 }
+
 
 /* The individual day numbers */
 .date-picker-popup .day-cell {
@@ -158,7 +283,13 @@
 }
 
 .date-picker-popup .day-cell:hover {
-    -fx-background-color: #505760;
+    /* Use your Bright Beige for hover so it's super obvious */
+    -fx-background-color: #DFD0B8;
+
+    /* Force text to be Dark so it's readable on the light background */
+    -fx-text-fill: #222831;
+
+    -fx-cursor: hand;
 }
 
 /* The current date (e.g., Nov 14) */
@@ -195,4 +326,114 @@
 
     /* A subtle shadow to make it float */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 2);
+}
+
+/* --- 10. DatePicker Button Fix (for filter bar) --- */
+
+/* This targets the button on the DatePicker */
+.date-picker .arrow-button {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray */
+    -fx-background-radius: 0 12 12 0; /* Match the text field's rounded corner */
+}
+
+/* Style for when you hover over the button */
+.date-picker .arrow-button:hover {
+    -fx-background-color: #505760; /* BACKGROUND: Lighter Gray on hover */
+}
+
+/* This styles the little calendar graphic itself */
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #DFD0B8; /* ARROW/ICON COLOR: Beige */
+}
+
+/* --- 10. DatePicker Container Fix --- */
+
+/* This styles the outer container of the DatePicker */
+.date-picker {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray (Matches the text field) */
+    -fx-background-radius: 12;     /* Match the text field's rounded corners */
+}
+
+
+/* This makes any button smoothly scale up when you hover */
+.button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-background-color: #505760; /* This is Ivan's existing hover color */
+}
+
+/* This makes the Add Task button scale up */
+#addTaskButton:hover {
+    -fx-background-color: #DFD0B8; /* Ivan's existing hover color */
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-cursor: hand;
+}
+
+/* --- 14. Button Pressed Effect --- */
+
+.button:pressed {
+    /* Move the button down and right 1 pixel */
+    -fx-translate-y: 1px;
+    -fx-translate-x: 1px;
+    /* Add an inner shadow to look "pressed" */
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+}
+
+#addTaskButton:pressed {
+    -fx-translate-y: 1px;
+    -fx-translate-x: 1px;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+}
+
+
+/* --- TABLE SCROLLBAR STYLING --- */
+
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* The background track of the scrollbar */
+.table-view .scroll-bar:vertical .track,
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: #222831; /* Dark background (matches root) */
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+}
+
+/* The draggable "thumb" part */
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #393E46; /* Muted Grey (matches fields) */
+    -fx-background-radius: 10;
+}
+
+/* Hover effect for the thumb */
+.table-view .scroll-bar:vertical .thumb:hover,
+.table-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #505760; /* Lighter grey on hover */
+}
+
+/* The arrow buttons at the ends */
+.table-view .scroll-bar .increment-button,
+.table-view .scroll-bar .decrement-button {
+    -fx-background-color: #222831; /* Match background */
+    -fx-background-radius: 0;
+    -fx-padding: 4px;
+}
+
+/* The actual arrow icons inside the buttons */
+.table-view .scroll-bar .increment-arrow,
+.table-view .scroll-bar .decrement-arrow {
+    -fx-background-color: #DFD0B8; /* Beige accent color */
+    -fx-padding: 4px;
+}
+
+/* Hover effect for the arrow buttons */
+.table-view .scroll-bar .increment-button:hover,
+.table-view .scroll-bar .decrement-button:hover {
+    -fx-background-color: #393E46;
 }

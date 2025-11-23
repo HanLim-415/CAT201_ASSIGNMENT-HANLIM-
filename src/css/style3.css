@@ -1,0 +1,261 @@
+/* === CSS for TaskView.fxml ONLY === */
+
+/* --- 1. Main Pop-up Container --- */
+.root, .vbox {
+    -fx-background-color: #222831; /* BACKGROUND: Dark Gray/Blue */
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 0);
+    -fx-padding: 20px;
+}
+
+/* --- 2. Labels and Text --- */
+.label {
+    -fx-text-fill: #DFD0B8; /* TEXT COLOR: Beige/Light Brown */
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* * --- 3. Style the "TASK DETAILS" Title ---
+ * MODIFIED: Font now matches Ivan's main app title
+*/
+.title-label {
+    -fx-font-size: 28px; /* <-- MATCHES IVAN'S FONT */
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+    -fx-font-weight: bold; /* <-- MATCHES IVAN'S FONT */
+    -fx-text-fill: #DFD0B8; /* TEXT COLOR: Beige/Light Brown */
+}
+
+/* --- 4. Input Fields (TextField, TextArea, Pickers, etc.) --- */
+.text-field,
+.text-area,
+.date-picker,
+.choice-box {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray */
+    -fx-text-fill: #DFD0B8; /* TEXT COLOR: Beige/Light Brown (for typed text) */
+    -fx-border-color: #D3D3D3; /* BORDER COLOR: Light Gray */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-prompt-text-fill: derive(#DFD0B8, -30%); /* Prompt text color */
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+    -fx-font-size: 13px;
+}
+
+/* This targets the internal content area of the TextArea */
+.text-area .content {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray */
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+}
+
+/* This styles the highlight border when an input is clicked */
+.text-field:focused,
+.text-area:focused,
+.choice-box:focused {
+    -fx-border-color: #948979; /* BORDER COLOR: Beige highlight on focus */
+    -fx-border-width: 2px;
+}
+
+/* --- 5. Style the "Close" Button (using its fx:id) --- */
+#closeTaskFormButton {
+    -fx-background-color: #BE3144; /* BACKGROUND: Bright Red */
+    -fx-text-fill: #DFD0B8; /* TEXT COLOR: Dark Gray */
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+    -fx-background-radius: 5px;
+    -fx-padding: 8 15 8 15;
+}
+
+#closeTaskFormButton:hover {
+    -fx-background-color: #F15A59; /* BACKGROUND: Slightly lighter gray on hover */
+}
+
+/* This specifically styles the 'Save' button (using its fx:id) */
+#saveTaskButton {
+    -fx-background-color: #3f654a; /* BACKGROUND: Bright Green Accent */
+    -fx-text-fill: #DFD0B8; /* TEXT COLOR: White */
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 8 15 8 15;
+}
+
+#saveTaskButton:hover {
+    -fx-background-color: #588866; /* BACKGROUND: Lighter Teal on hover */
+}
+
+/* --- 7. DatePicker Calendar Pop-up --- */
+/* The text input area */
+.date-picker .text-field {
+    -fx-background-color: #393E46;
+    -fx-text-fill: #DFD0B8;
+    -fx-background-radius: 12 0 0 12;
+    -fx-prompt-text-fill: derive(#DFD0B8, -30%);
+    -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
+}
+
+/* The calendar icon button on the right */
+.date-picker .arrow-button {
+    -fx-background-color: #393E46;
+    -fx-background-radius: 0 12 12 0;
+    -fx-cursor: hand;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #505760; /* Lighter grey hover */
+}
+
+/* The icon graphic inside the button */
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #DFD0B8; /* Beige icon */
+}
+
+
+/* --- 2. The Calendar Popup (Open State) --- */
+
+/* The main popup window */
+.date-picker-popup {
+    -fx-background-color: #393E46;
+    -fx-border-color: #948979;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+}
+
+/* The top bar (Month Year) */
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #393E46;
+}
+
+.date-picker-popup .label {
+    -fx-text-fill: #DFD0B8;
+    -fx-font-weight: bold;
+}
+
+/* The Header Row (Sun, Mon, Tue) - UPDATED FOR CLARITY */
+.date-picker-popup .day-name-cell {
+    -fx-text-fill: #DFD0B8; /* Muted brown */
+    -fx-font-weight: bold;
+    -fx-background-color: #222831;
+}
+
+/* Normal Days */
+.date-picker-popup .day-cell {
+    -fx-background-color: #393E46;
+    -fx-text-fill: #DFD0B8;
+    -fx-background-radius: 4;
+}
+
+/* Hover Effect - UPDATED FOR VISIBILITY */
+.date-picker-popup .day-cell:filled:hover {
+    -fx-background-color: #DFD0B8; /* Bright Beige background */
+    -fx-text-fill: #222831 !important; /* Dark text */
+    -fx-cursor: hand;
+}
+
+/* Selected Date */
+.date-picker-popup .day-cell:filled:selected {
+    -fx-background-color: #948979; /* Darker Beige */
+    -fx-text-fill: #222831;
+    -fx-font-weight: bold;
+}
+
+/* "Today" styling */
+.date-picker-popup .day-cell.today {
+    -fx-border-color: #948979;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4;
+}
+
+/* Previous/Next Month (Faded numbers) */
+.date-picker-popup .day-cell.previous-month,
+.date-picker-popup .day-cell.next-month {
+    -fx-text-fill: #6c757d; /* Grey so they are visible but distinct */
+}
+
+/* Month Navigation Arrows ( < and > ) */
+.date-picker-popup .spinner .arrow-button {
+    -fx-background-color: #393E46;
+}
+
+.date-picker-popup .spinner .arrow-button:hover {
+    -fx-background-color: #505760;
+}
+
+.date-picker-popup .spinner .arrow-button .arrow {
+    -fx-background-color: #DFD0B8;
+}
+
+/* 1. Target the buttons inside the Month/Year spinner */
+.date-picker-popup .spinner .button {
+    -fx-background-color: transparent; /* Remove the grey background */
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+}
+
+/* 2. Add a hover effect so you know they are clickable */
+.date-picker-popup .spinner .button:hover {
+    -fx-background-color: #505760; /* Dark Grey hover */
+    -fx-background-radius: 3;
+}
+
+/* 3. Color the arrow shapes ( < and > ) Beige */
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+    -fx-background-color: #DFD0B8; /* Your accent beige */
+    -fx-effect: null; /* Remove any default shadows */
+}
+
+/* 4. Ensure the label (Month Name / Year) matches the text color */
+.date-picker-popup .spinner .label {
+    -fx-text-fill: #DFD0B8;
+    -fx-font-weight: bold;
+}
+
+/* --- 8. ChoiceBox Dropdown Menu Styling (Corrected) --- */
+
+/* This targets the context menu that a ChoiceBox uses */
+.choice-box .context-menu {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray */
+    -fx-border-color: #948979; /* BORDER COLOR: Beige */
+    -fx-border-width: 1px;
+}
+
+/* This styles each item (row) in the dropdown list */
+.choice-box .menu-item {
+    -fx-background-color: #393E46; /* BACKGROUND: Muted Dark Blue-Gray */
+}
+
+/* This styles the text of each item */
+.choice-box .menu-item .label {
+    -fx-text-fill: #DFD0B8; /* TEXT COLOR: Beige */
+    -fx-padding: 5px 10px;
+}
+
+/* This styles an item when you hover over it */
+.choice-box .menu-item:focused {
+    -fx-background-color: #505760; /* BACKGROUND: Lighter Gray on hover */
+}
+.choice-box .menu-item:focused .label {
+    -fx-text-fill: #DFD0B8;
+}
+
+/* * === THIS IS THE FIX ===
+ * We target the '.selected' style class, which JavaFX
+ * automatically adds to the selected RadioMenuItem.
+*/
+
+/* This styles the background of the *selected* item */
+.choice-box .menu-item.selected {
+    -fx-background-color: #948979; /* BACKGROUND: Beige highlight */
+}
+
+/* This styles the text of the *selected* item */
+.choice-box .menu-item.selected .label {
+    -fx-text-fill: #222831; /* TEXT COLOR: Dark Gray */
+    -fx-font-weight: bold;
+}
+
+/* This styles the little checkmark dot itself */
+.choice-box .menu-item.selected .radio-menu-item-icon {
+    -fx-background-color: #222831; /* DOT COLOR: Dark Gray */
+}

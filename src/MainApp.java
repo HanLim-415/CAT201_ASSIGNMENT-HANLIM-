@@ -24,7 +24,7 @@ public class MainApp extends Application {
         primaryStage.setTitle("Smart To-Do List");
 
         // 5. Create a scene
-        Scene scene = new Scene(root, 1200, 700);
+        Scene scene = new Scene(root, 1400, 700);
 
         // 6. Attach the scene
         primaryStage.setScene(scene);
@@ -40,7 +40,8 @@ public class MainApp extends Application {
             Platform.exit(); // Tells JavaFX to shut down
             System.exit(0);  // Tells the Java Virtual Machine to shut down
         });
-        // --- END OF FIX ---
+
+        primaryStage.setResizable(true);
 
         // 8. Show the window
         primaryStage.show();
