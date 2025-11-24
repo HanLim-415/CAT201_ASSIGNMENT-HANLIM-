@@ -2,8 +2,10 @@
   <library name="gson-2.10.1">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/gson-2.10.1.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/lib1" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/lib1" recursive="false" />
   </library>
 </component>

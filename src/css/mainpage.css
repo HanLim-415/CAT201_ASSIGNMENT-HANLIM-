@@ -5,6 +5,13 @@
     -fx-font-size: 14px;
     -fx-selection-bar: #948979;
     -fx-selection-bar-non-focused: #505760;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+
+    -fx-border-color: #948979;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 20, 0, 15, 10);
+    -fx-padding: 10px;
 }
 
 .check-box .box {
@@ -216,10 +223,17 @@
     -fx-font-size: 14px;
 }
 
-/* 8. MENU BAR (Fix) */
+#menuBarHBox {
+    -fx-background-color: #393E46; /* Dark Grey Background */
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-padding: 5px 10px;
+}
+
 #menuBar, #menuBarPane1, #menuBarPane2{
     -fx-background-color: #393E46;
 }
+
 .menu-bar .label {
     -fx-text-fill: #DFD0B8;
     -fx-font-size: 14px;

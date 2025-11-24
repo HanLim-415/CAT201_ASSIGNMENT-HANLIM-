@@ -14,7 +14,7 @@
     "dueDate": "2025-11-19",
     "category": "Home",
     "priority": "Low",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -23,7 +23,7 @@
     "dueDate": "2025-11-22",
     "category": "School",
     "priority": "High",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -32,7 +32,7 @@
     "dueDate": "2025-11-21",
     "category": "School",
     "priority": "High",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -41,7 +41,7 @@
     "dueDate": "2025-11-17",
     "category": "Home",
     "priority": "Low",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -95,7 +95,7 @@
     "dueDate": "2025-11-16",
     "category": "Home",
     "priority": "Low",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -167,7 +167,7 @@
     "dueDate": "2025-11-20",
     "category": "Work",
     "priority": "Medium",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -176,7 +176,7 @@
     "dueDate": "2025-11-17",
     "category": "School",
     "priority": "Medium",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -221,7 +221,7 @@
     "dueDate": "2025-11-16",
     "category": "Home",
     "priority": "Low",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -275,7 +275,7 @@
     "dueDate": "2025-11-17",
     "category": "Home",
     "priority": "Low",
-    "completed": true,
+    "completed": false,
     "isDeleted": false
   },
   {
@@ -365,15 +365,6 @@
     "dueDate": "2025-11-17",
     "category": "Personal",
     "priority": "Low",
-    "completed": true,
-    "isDeleted": false
-  },
-  {
-    "title": "Buy Popcorn",
-    "description": "For cinema purpose",
-    "dueDate": "2025-11-19",
-    "category": "Work",
-    "priority": "Medium",
     "completed": false,
     "isDeleted": false
   }

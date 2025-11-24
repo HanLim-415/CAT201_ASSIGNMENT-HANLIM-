@@ -32,13 +32,14 @@
                   <Pane prefHeight="85.0" prefWidth="380.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="menuBarHBox" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
                   <Pane fx:id="menuBarPane1" prefHeight="30.0" prefWidth="480.0" HBox.hgrow="ALWAYS" />
                    <MenuBar fx:id="menuBar">
                        <menus>
-                           <Menu fx:id="menuItemFile" mnemonicParsing="false" text="File">
+                           <Menu fx:id="menuItemFile" mnemonicParsing="false" text="Menu">
                                <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleMinimize" text="Minimize" />
                                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                                </items>
                            </Menu>

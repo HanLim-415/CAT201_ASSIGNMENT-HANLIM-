@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.time.LocalDate;
-import java.util.Optional; // Needed for Alert.showAndWait() result
 import model.Task;
 
 public class TaskFormController {

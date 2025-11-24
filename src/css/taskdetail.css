@@ -3,15 +3,17 @@
 /* --- 1. Main Pop-up Container --- */
 .root, .vbox {
     -fx-background-color: #222831; /* BACKGROUND: Dark Gray/Blue */
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 0);
+    -fx-background-radius: 15;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 20, 0, 10, 10);
+    -fx-border-color: #948979;
     -fx-padding: 20px;
 }
 
 /* --- 2. Labels and Text --- */
 .label {
-    -fx-text-fill: #DFD0B8; /* TEXT COLOR: Beige/Light Brown */
+    -fx-text-fill: #DFD0B8;
     -fx-font-weight: bold;
     -fx-font-family: "Segoe UI Black", Helvetica, sans-serif;
     -fx-font-size: 14px;

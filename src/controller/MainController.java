@@ -6,15 +6,19 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Task;
 import javafx.scene.control.Alert.AlertType;
 
@@ -37,6 +41,8 @@ public class MainController {
 
     private ObservableList<Task> tasks = DataManager.loadTasks();
     private FilteredList<Task> filteredTasks;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     // --- FXML Fields (unchanged) ---
     @FXML private Button addTaskButton;
@@ -112,6 +118,18 @@ public class MainController {
         updateSummaryLabels();
     }
 
+    // --- Helper Method to Make Window Draggable ---
+    private void makeDraggable(Parent root, Stage stage) {
+        root.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+    }
     /**
      * Calculates and updates the summary labels in the sidebar.
      * (This method is unchanged, the logic here is correct)
@@ -157,12 +175,22 @@ public class MainController {
             Parent taskFormRoot = loader.load();
             TaskFormController taskFormController = loader.getController();
 
+            // 1. Create Stage with TRANSPARENT Style (Removes White Bar)
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Add New Task");
+            dialogStage.initStyle(javafx.stage.StageStyle.TRANSPARENT);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner((Stage) addTaskButton.getScene().getWindow());
-            dialogStage.setScene(new Scene(taskFormRoot));
+
+            // 2. Create Scene ONCE and set Fill to TRANSPARENT
+            Scene scene = new Scene(taskFormRoot);
+            scene.setFill(javafx.scene.paint.Color.TRANSPARENT); // Required for rounded corners
+            dialogStage.setScene(scene);
+
+            // 3. Pass Data to Controller
             taskFormController.setDialogStage(dialogStage);
+
+            // 4. Enable Dragging (Since we removed the title bar)
+            makeDraggable(taskFormRoot, dialogStage);
 
             dialogStage.showAndWait();
 
@@ -179,6 +207,15 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleMinimize() {
+        // Get the current stage (window) from any component in the scene, e.g., addTaskButton
+        Stage stage = (Stage) addTaskButton.getScene().getWindow();
+
+        // Minimize the window
+        stage.setIconified(true);
     }
 
     @FXML
@@ -225,72 +262,93 @@ public class MainController {
         }
     }
 
+    // --- UPDATED HELP METHOD ---
     @FXML
     private void handleHelp() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("User Guidelines");
         alert.setHeaderText("How to use Smart ToDo List");
 
-        // --- 1. SET THE ICON (Top Right) ---
-        try {
-            Image helpIcon = new Image(getClass().getResourceAsStream("/images/help.png"));
-            ImageView iconView = new ImageView(helpIcon);
-            iconView.setFitHeight(48);
-            iconView.setFitWidth(48);
-            alert.setGraphic(iconView);
-        } catch (Exception e) {
-            System.out.println("Help icon not found.");
+        // 1. Set Alert Icon
+        ImageView helpIcon = loadImageViewSafely("/images/help.png", 48);
+        if (helpIcon != null) {
+            alert.setGraphic(helpIcon);
         }
 
-        // --- 2. CREATE A CONTAINER FOR TEXT + IMAGE ---
-        // A VBox (Vertical Box) to stack text on top of the image
-        VBox contentContainer = new VBox(15); // 15px spacing between items
-        contentContainer.setPrefWidth(500);   // Force it to be wider so text fits!
+        // 2. Load Content Images using the helper method
+        ImageView addTaskImageNode = loadImageViewSafely("/images/add-task.png", 150);
+        ImageView deleteTaskNode = loadImageViewSafely("/images/delete.png", 900);
+        ImageView filterTaskNode = loadImageViewSafely("/images/filter.png", 900);
+        ImageView exitTaskNode = loadImageViewSafely("/images/exit-app.png", 250);
 
-        // --- 3. THE TEXT PART ---
-        String guidelinesText =
-                        "1. Add Task:\n" +
-                        "   Click the (+) button on the left sidebar to create a new task.\n\n" +
-                        "2. Edit Task:\n" +
-                        "   Double-click any row in the table to edit details.\n\n" +
-                        "3. Delete Task:\n" +
-                        "   Select a task and click 'Delete' to remove it.\n\n" +
-                        "4. Search & Filter:\n" +
-                        "   Use the top bar to search by keyword or filter by Category.\n\n" +
-                        "5. Save & Exit:\n" +
-                        "   Your data saves automatically when you modify tasks or exit.";
+        // 2. Create Main Container
+        VBox contentContainer = new VBox(20);
+        contentContainer.setPrefWidth(500);
 
-        Label textLabel = new Label(guidelinesText);
-        textLabel.setWrapText(true); // <--- THIS FIXES THE CUT-OFF TEXT
-        textLabel.setStyle("-fx-text-fill: #DFD0B8; -fx-font-size: 14px; -fx-font-family: 'Segoe UI Black';");
+        // 3. Add Help Items (Using the helper method for cleaner code)
+        contentContainer.getChildren().addAll(
+                createHelpItem("1. Add Task", "Click the (+) button on the left sidebar to create a new task."), addTaskImageNode,
+                createHelpItem("2. Edit Task", "Double-click any row in the table to view or edit details."),
+                createHelpItem("3. Delete Task", "Select a task row and click the 'Delete' button to remove it."), deleteTaskNode,
+                createHelpItem("4. Search & Filter", "Use the top bar to search by keyword or filter by Category/Status."), filterTaskNode,
+                createHelpItem("5. Save & Exit", "Your data saves automatically when you modify tasks or exit the app."), exitTaskNode
+        );
 
-        // --- 4. THE IMAGE SNIPPET PART ---
-        // Uncomment and use your image file when you have it!
-    /*
-    try {
-        Image snippet = new Image(getClass().getResourceAsStream("/images/snippet.png"));
-        ImageView snippetView = new ImageView(snippet);
-        snippetView.setFitWidth(480); // Make it fit inside the box
-        snippetView.setPreserveRatio(true);
-        contentContainer.getChildren().add(snippetView);
-    } catch (Exception e) {
-        // Image not found
-    }
-    */
-
-        // Add text (and later the image) to the box
-        contentContainer.getChildren().add(0, textLabel); // Add text at index 0
-
-        // --- 5. SET THIS BOX AS THE DIALOG CONTENT ---
+        // 5. Set Content & Style
         alert.getDialogPane().setContent(contentContainer);
-
-        // --- 6. APPLY STYLING ---
         alert.initStyle(javafx.stage.StageStyle.UNDECORATED);
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("/css/alertpage.css").toExternalForm());
         dialogPane.getStyleClass().add("alert-page");
 
         alert.showAndWait();
+    }
+
+    /**
+     * Helper method to load an image safely.
+     * Returns an ImageView if successful, or null if the image is missing.
+     */
+    private ImageView loadImageViewSafely(String path, double width) {
+        try {
+            Image img = new Image(getClass().getResourceAsStream(path));
+            ImageView view = new ImageView(img);
+            view.setFitWidth(width);
+            view.setPreserveRatio(true);
+            return view;
+        } catch (Exception e) {
+            System.out.println("Image not found: " + path);
+            return null; // Return null so nothing gets added to the VBox
+        }
+    }
+
+    /**
+     * Helper method to create a nicely formatted help item.
+     * It puts the Title in Gold/Beige (Bold) and the Description in Light Beige (Normal).
+     */
+    private VBox createHelpItem(String title, String description, Node graphic) {
+        Label titleLabel = new Label(title);
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #948979; -fx-font-size: 15px; -fx-font-family: 'Segoe UI Black';");
+
+        Label descLabel = new Label(description);
+        descLabel.setStyle("-fx-text-fill: #DFD0B8; -fx-font-size: 13px; -fx-font-family: 'Segoe UI Black';");
+        descLabel.setWrapText(true);
+
+        VBox container = new VBox(5, titleLabel, descLabel);
+
+        // If an image exists, wrap it in an HBox to CENTER it
+        if (graphic != null) {
+            HBox imageWrapper = new HBox(graphic);
+            imageWrapper.setAlignment(Pos.CENTER); // This centers the image horizontally
+            container.getChildren().add(imageWrapper);
+        }
+
+        return container;
+    }
+
+    // Overloaded helper for text-only items
+    private VBox createHelpItem(String title, String description) {
+        return createHelpItem(title, description, null);
     }
 
     @FXML
@@ -310,21 +368,29 @@ public class MainController {
             Parent taskFormRoot = loader.load();
             TaskFormController taskFormController = loader.getController();
 
+            // 1. Create Stage with TRANSPARENT Style (Removes White Bar)
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Task Details");
+            dialogStage.initStyle(javafx.stage.StageStyle.TRANSPARENT);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner((Stage) addTaskButton.getScene().getWindow());
-            dialogStage.setScene(new Scene(taskFormRoot));
 
+            // 2. Create Scene ONCE and set Fill to TRANSPARENT
+            Scene scene = new Scene(taskFormRoot);
+            scene.setFill(javafx.scene.paint.Color.TRANSPARENT); // Required for rounded corners
+            dialogStage.setScene(scene);
+
+            // 3. Pass Data to Controller
             taskFormController.setTask(selectedTask);
             taskFormController.setDialogStage(dialogStage);
 
+            // 4. Enable Dragging (Since we removed the title bar)
+            makeDraggable(taskFormRoot, dialogStage);
+
+            // 5. Show
             dialogStage.showAndWait();
 
             if (taskFormController.isSaveClicked()) {
                 taskTable.refresh();
-                // We must manually tell the ListChangeListener that the
-                // task has been updated, so the summary labels refresh.
                 int index = tasks.indexOf(selectedTask);
                 if (index != -1) {
                     tasks.set(index, selectedTask);

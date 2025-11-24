@@ -1,54 +1,70 @@
 import controller.MainController;
 import javafx.application.Application;
-import javafx.application.Platform; // <-- Make sure this import is here
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainApp extends Application {
+
+    // Define these at the CLASS level
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // 1. Create a loader instance
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainView.fxml"));
-
-        // 2. Load the root node
         Parent root = loader.load();
-
-        // 3. GET THE CONTROLLER
         MainController controller = loader.getController();
 
-        // 4. Set the window title
         primaryStage.setTitle("Smart To-Do List");
 
-        // 5. Create a scene
-        Scene scene = new Scene(root, 1400, 700);
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/images/app-icon.png"));
+            primaryStage.getIcons().add(icon);
+        } catch (Exception e) {
+            System.out.println("App icon not found");
+        }
 
-        // 6. Attach the scene
+        // 1. Transparent Window
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+
+        // 2. Larger Scene
+        Scene scene = new Scene(root, 1440, 800);
+
+        // 3. Transparent Fill
+        scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
 
-        // 7. --- THIS IS THE CORRECTED EXIT LOGIC ---
-        // This will run, save the tasks, and then
-        // force the application to shut down.
-        primaryStage.setOnCloseRequest(event -> {
-            System.out.println("Window is closing. Saving tasks...");
-            controller.saveTasksOnExit(); // Call the save method
-
-            // --- ADD THESE LINES BACK IN ---
-            Platform.exit(); // Tells JavaFX to shut down
-            System.exit(0);  // Tells the Java Virtual Machine to shut down
+        // 4. Dragging Logic
+        // We use 'this' to be explicit, though it should work without it if scope is correct.
+        root.setOnMousePressed(event -> {
+            this.xOffset = event.getSceneX();
+            this.yOffset = event.getSceneY();
         });
 
-        primaryStage.setResizable(true);
+        root.setOnMouseDragged(event -> {
+            primaryStage.setX(event.getScreenX() - this.xOffset);
+            primaryStage.setY(event.getScreenY() - this.yOffset);
+        });
 
-        // 8. Show the window
+        // 5. Exit Logic
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("Window is closing. Saving tasks...");
+            controller.saveTasksOnExit();
+            Platform.exit();
+            System.exit(0);
+        });
+
         primaryStage.show();
     }
 
     public static void main(String[] args) {
-        // Launch the JavaFX application
         launch(args);
     }
 }
