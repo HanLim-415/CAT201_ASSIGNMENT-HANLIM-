@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.time.LocalDate;
+import java.util.Optional; // Needed for Alert.showAndWait() result
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.Task;
 
 public class TaskFormController {
@@ -23,6 +26,8 @@ public class TaskFormController {
     private Button saveTaskButton;
     @FXML
     private Button closeTaskFormButton;
+    @FXML
+    private Label formTitleLabel; // <--- Links to the FXML ID
 
     private Stage dialogStage;      // Reference to the pop-up window's stage (itself)
     private boolean saveClicked = false; // Flag to indicate if "Save" button was pressed
@@ -42,6 +47,23 @@ public class TaskFormController {
         // Select default values (optional, can be removed)
         taskCategoryChoiceBox.getSelectionModel().selectFirst(); // Selects the first item
         taskPriorityChoiceBox.getSelectionModel().select("Medium"); // Selects "Medium"
+
+        // --- NEW CODE: EXACTLY LIKE YOUR DELETE EXAMPLE ---
+        try {
+            Image image = new Image(getClass().getResourceAsStream("/images/document.png"));
+            ImageView imageView = new ImageView(image);
+
+            // 35px is usually a good size for a header icon
+            imageView.setFitHeight(35);
+            imageView.setFitWidth(35);
+
+            formTitleLabel.setGraphic(imageView);
+            formTitleLabel.setGraphicTextGap(15); // Adds space between icon and text
+
+        } catch (Exception e) {
+            // If image isn't found, it just shows text. No crash.
+        }
+        // --------------------------------------------------
 
         // You can add listeners here if needed, e.g., to validate in real-time
     }
@@ -140,18 +162,42 @@ public class TaskFormController {
         }
 
         if (errorMessage.isEmpty()) {
-            return true; // All fields are valid
+            return true;
         } else {
-            // Show an alert dialog with the validation errors
+            // --- CREATE STYLED ALERT ---
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(dialogStage); // Make the alert tied to the pop-up window
+            alert.initOwner(dialogStage);
             alert.setTitle("Invalid Input");
             alert.setHeaderText("Please Correct Invalid Fields");
             alert.setContentText(errorMessage);
 
-            // Wait for the user to close the alert
+            // 1. Remove the white window bar
+            alert.initStyle(javafx.stage.StageStyle.UNDECORATED);
+
+            // 2. Add the 'error.png' icon
+            try {
+                // Ensure error.png is in src/main/resources/images/
+                Image image = new Image(getClass().getResourceAsStream("/images/error.png"));
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(48);
+                imageView.setFitWidth(48);
+                alert.setGraphic(imageView);
+            } catch (Exception e) {
+                // If image is missing, it will just show the text
+            }
+
+            // 3. Link the CSS
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/alertpage.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert-page");
+
+            // 4. Style the OK button to be Green
+            Button okButton = (Button) dialogPane.lookupButton(ButtonType.OK);
+            okButton.getStyleClass().add("yes-button");
+
             alert.showAndWait();
-            return false; // Input is not valid
+
+            return false;
         }
     }
 

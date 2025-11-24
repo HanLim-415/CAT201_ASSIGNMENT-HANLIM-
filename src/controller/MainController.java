@@ -22,7 +22,6 @@ import javafx.stage.StageStyle;
 import model.Task;
 import javafx.scene.control.Alert.AlertType;
 
-import java.awt.*;
 import java.util.Optional;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -359,6 +358,30 @@ public class MainController {
             alert.setTitle("No Selection");
             alert.setHeaderText("No Task Selected");
             alert.setContentText("Please select a task in the table to view/edit.");
+            alert.initStyle(javafx.stage.StageStyle.UNDECORATED); // Removes white title bar
+
+            // --- ADD CUSTOM ERROR ICON ---
+            try {
+                Image image = new Image(getClass().getResourceAsStream("/images/error.png"));
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(48);
+                imageView.setFitWidth(48);
+                alert.setGraphic(imageView);
+            } catch (Exception e) {
+                System.out.println("Could not load error.png");
+            }
+
+            // 1. Link CSS
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/alertpage.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert-page");
+
+            // 2. Style the OK Button (So it isn't invisible)
+            Button okButton = (Button) dialogPane.lookupButton(ButtonType.OK);
+            // We reuse "yes-button" (Green) or "no-button" (Red) to ensure text is visible.
+            // Green ("yes-button") is usually best for a simple "OK".
+            okButton.getStyleClass().add("yes-button");
+
             alert.showAndWait();
             return;
         }
@@ -404,22 +427,78 @@ public class MainController {
     @FXML
     private void handleDeleteTask() {
         Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+
+        // --- 1. "NO SELECTION" POPUP (Yellow Warning Triangle) ---
         if (selectedTask == null) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("No Selection");
+            // BIG HEADER TEXT
             alert.setHeaderText("No Task Selected");
             alert.setContentText("Please select a task in the table to delete.");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Confirm Deletion");
-            alert.setHeaderText("Delete Task: " + selectedTask.getTitle());
-            alert.setContentText("Are you sure you want to delete this task?");
+            alert.initStyle(javafx.stage.StageStyle.UNDECORATED);
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                tasks.remove(selectedTask);
+            // --- ADD CUSTOM ERROR ICON ---
+            try {
+                Image image = new Image(getClass().getResourceAsStream("/images/error.png"));
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(48);
+                imageView.setFitWidth(48);
+                alert.setGraphic(imageView);
+            } catch (Exception e) {
+                System.out.println("Could not load error.png");
             }
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/css/alertpage.css").toExternalForm());
+            dialogPane.getStyleClass().add("alert-page");
+
+            Button okButton = (Button) dialogPane.lookupButton(ButtonType.OK);
+            okButton.getStyleClass().add("yes-button");
+
+            alert.showAndWait();
+            return;
+        }
+
+        // --- 2. DELETE CONFIRMATION POPUP (Custom Folder Icon) ---
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Delete Task");
+
+        // --- THIS MAKES IT LOOK LIKE THE OTHER POPUP ---
+        alert.setHeaderText("Confirm Deletion");
+
+        alert.setContentText("Are you sure you want to delete: " + selectedTask.getTitle() + "?");
+        alert.initStyle(javafx.stage.StageStyle.UNDECORATED);
+
+        // Add your Custom Icon
+        try {
+            Image image = new Image(getClass().getResourceAsStream("/images/delete-icon.png"));
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(48);
+            imageView.setFitWidth(48);
+            alert.setGraphic(imageView);
+        } catch (Exception e) {
+            // Ignore if image missing
+        }
+
+        // Link CSS
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/css/alertpage.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert-page");
+
+        // Customize Buttons
+        ButtonType buttonTypeYes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeNo = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        Button yesButton = (Button) dialogPane.lookupButton(buttonTypeYes);
+        Button noButton = (Button) dialogPane.lookupButton(buttonTypeNo);
+
+        yesButton.getStyleClass().add("no-button"); // Red
+        noButton.getStyleClass().add("yes-button"); // Green
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == buttonTypeYes) {
+            tasks.remove(selectedTask);
         }
     }
 

@@ -19,7 +19,7 @@
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
 
-      <Label styleClass="title-label" text="TASK DETAILS">
+      <Label fx:id="formTitleLabel" styleClass="title-label" text="TASK DETAILS">
          <padding>
             <Insets bottom="15.0" />
          </padding>
