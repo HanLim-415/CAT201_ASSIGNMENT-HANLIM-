@@ -18,7 +18,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Task;
 import javafx.scene.control.Alert.AlertType;
 
@@ -226,7 +225,7 @@ public class MainController {
         alert.setContentText("Are you sure you want to exit?");
         alert.initStyle(javafx.stage.StageStyle.UNDECORATED);
 
-        Image image = new Image(getClass().getResourceAsStream("/images/exit.png"));
+        Image image = new Image(getClass().getResourceAsStream("/images/exit-icon.png"));
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
@@ -276,7 +275,7 @@ public class MainController {
 
         // 2. Load Content Images using the helper method
         ImageView addTaskImageNode = loadImageViewSafely("/images/add-task.png", 150);
-        ImageView deleteTaskNode = loadImageViewSafely("/images/delete.png", 900);
+        ImageView deleteTaskNode = loadImageViewSafely("/images/delete-task.png", 900);
         ImageView filterTaskNode = loadImageViewSafely("/images/filter.png", 900);
         ImageView exitTaskNode = loadImageViewSafely("/images/exit-app.png", 250);
 
@@ -471,7 +470,7 @@ public class MainController {
 
         // Add your Custom Icon
         try {
-            Image image = new Image(getClass().getResourceAsStream("/images/delete.png"));
+            Image image = new Image(getClass().getResourceAsStream("/images/delete-icon.png"));
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(48);
             imageView.setFitWidth(48);
